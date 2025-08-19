@@ -10,9 +10,7 @@
 
 后面我还给它添加了许多新功能. 如果遇到 Bug，请将问题反馈到 Issues.（最好包括 Bug 的详细信息，如复现方法）
 
-中文体验链接：[这里](https://doclovecelquotes.netlify.app)
-
-English: [Click Here](https://www.google.com)
+体验链接：[这里](https://doclovecelquotes.netlify.app)
 
 ## 致谢
 本项目使用了以下优秀的第三方资源：
