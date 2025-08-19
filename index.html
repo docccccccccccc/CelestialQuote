@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="./css/index.css">
+    <link rel="stylesheet" href="./css/font.css">
+    <link rel="stylesheet" href="./fontawesome/css/all.css">
+    <script src="https://cdn.jsdelivr.net/npm/js-base64@3.7.8/base64.min.js" async></script>
+    <title>天神语录生成器</title>
+</head>
+
+<body>
+    <div id="options">
+        <h1>
+            选项
+        </h1>
+        <div id="options-container">
+            <div id="options-content">
+                <h2>内容选项</h2>
+                <label>
+                    <span id="celname-label">天神名称</span>
+                    <input type="text" id="option-celname" value="特蕾莎">
+                </label>
+                <label style="margin-top:4px">
+                    <span id="celquote-label">天神语录</span>
+                    <textarea id="option-celquote">我们一直在观察你.</textarea>
+                </label>
+            </div>
+            <div id="options-style">
+                <h2>样式选项</h2>
+                <label>
+                    <span id="celcolor-label">颜色代码</span>
+                    <input type="text" id="option-celcolor" value="#5151EC">
+                </label>
+                <br>
+                <label>
+                    <span id="celcharbg-label">用字符作为背景</span>
+                    <input type="checkbox" id="option-celcharbg" checked>
+                </label><br>
+                <label id="celchar">
+                    <span id="celchar-label">字符</span>
+                    <input type="text" id="option-celchar" maxlength="1" value="Ϟ">
+                </label>
+                <div id="celcharpreset">
+                    <button title="特蕾莎">Ϟ</button>
+                    <button title="鹿颈长">ϙ</button>
+                    <button title="薇">⌬</button>
+                    <button title="莱特拉">ᛝ</button>
+                    <button title="佩勒">♅</button>
+                    <button title="力量">Ω</button>
+                    <button ttile="无限">∞</button>
+                    <button title="复制">Ξ</button>
+                    <button title="时间">Δ</button>
+                    <button title="膨胀">ψ</button>
+                    <button title="诅咒">✝</button>
+                    <script>
+                        document.querySelectorAll("#celcharpreset>button").forEach(function (button) {
+                            button.addEventListener("click", function () {
+                                document.querySelector("#option-celchar").value = button.textContent;
+                            });
+                        });
+                    </script>
+                </div>
+                <label id="celimg">
+                    <span id="celimg-label">背景图片</span>
+                    <input type="file" id="option-celimg" accept=".png, .jpg, .jpeg, .svg, .webp, .bmp">
+                    <p>支持格式：png, jpg, jpeg, svg, webp, bmp</p>
+                </label>
+                <!-- <script>
+                
+            </script> -->
+            </div>
+            <div id="options-button">
+                <h2>按钮选项</h2>
+                <div>
+                    <label>
+                        <span id="celinner-label">按钮位于内部</span>
+                        <input type="checkbox" id="option-celinner"></input>
+                    </label>
+                    <div id="celouter">
+                        <label>
+                            <span id="celupbtn-label">向上箭头</span>
+                            <input type="checkbox" class="option-celbtn" id="option-celupbtn">
+                        </label>
+                        <label>
+                            <span id="celdownbtn-label">向下箭头</span>
+                            <input type="checkbox" class="option-celbtn" id="option-celdownbtn">
+                        </label>
+                        <label>
+                            <span id="celleftbtn-label">向左箭头</span>
+                            <input type="checkbox" class="option-celbtn" id="option-celleftbtn">
+                        </label>
+                        <label>
+                            <span id="celrightbtn-label">向右箭头</span>
+                            <input type="checkbox" class="option-celbtn" id="option-celrightbtn">
+                        </label>
+                    </div>
+                    <div id="celinner">
+                        <label>
+                            <span id="celokbtn-label">确认按钮</span>
+                            <input type="checkbox" id="option-celokbtn">
+                        </label>
+                        <label>
+                            <span id="celleftbtninner-label">向左箭头</span>
+                            <input type="checkbox" id="option-celleftbtninner">
+                        </label>
+                        <label>
+                            <span id="celrightbtninner-label">向右箭头</span>
+                            <input type="checkbox" id="option-celrightbtninner">
+                        </label>
+                    </div>
+                </div>
+            </div>
+            <div id="options-interaction">
+                <h2>操作按钮</h2>
+                <button onclick="exportOptions();" id="export"><i class="fas fa-copy"></i> 将配置复制到剪贴板</button>
+                <button onclick="importOptions();" id="import"><i class="fas fa-upload"></i> 从剪贴板导入配置（会直接读取！）</button>
+                <button onclick="exportOptionsAsFile();" id="export-as-file"><i class="fas fa-download"></i> 下载配置</button>
+                <input type="file" id="import-from-file-input" style="display: none;">
+                <button onclick="importOptionsFromFile()" id="import-from-file"><i class="fas fa-file"></i> 从文件导入配置</button>
+                <button onclick="generate()"><i class="fas fa-eye"></i> 生成</button>
+            </div>
+            <div id="changelog" onclick="this.style.display = 'none';">
+                <h2>更新</h2>
+                <p>新增将配置导出为文件 / 从文件导入的功能.<br>点击此区域隐藏更新日志.</p>
+            </div>
+        </div>
+    </div>
+    <div id="celquote-container">
+        <p>你现在正在预览生成效果. 单击以退出.</p>
+        <i class="celquote-close fas fa-circle-xmark" id="celquote-close"></i>
+        <div id="celquote-main">
+            <span id="celquote-bg">
+                <span id="celquote-bg-text" class="custom-color">Ϟ</span>
+                <img id="celquote-bg-img" width="200px" height="200px" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAQAAAAEACAIAAADTED8xAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAADVSURBVHhe7cExAQAAAMKg9U/tYwwgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAOBqAS0AAXoC7eAAAAAASUVORK5CYII=">
+            </span>
+            <span id="celquote-shadow" class="custom-color">
+            </span>
+            <span id="celquote-content">
+                <span id="celname" class="custom-color">Teresa</span>
+                <i class="celctrl-innerbtn fas fa-chevron-circle-left custom-color" id="celctrl-leftbtn"></i>
+                <p id="celquote" class="custom-color">我们一直在观察你.</p>
+                <i class="celctrl-innerbtn fas fa-chevron-circle-right custom-color" id="celctrl-rightbtn"></i>
+                <i class="celctrl-innerbtn fas fa-check-circle custom-color" id="celctrl-okbtn"></i>
+            </span>
+        </div>
+        <div>
+            <i class="celctrl-arrowbtn fas fa-chevron-circle-up" id="celctrl-outerupbtn"></i>
+            <i class="celctrl-arrowbtn fas fa-chevron-circle-down" id="celctrl-outerdownbtn"></i>
+            <i class="celctrl-arrowbtn fas fa-chevron-circle-left" id="celctrl-outerleftbtn"></i>
+            <i class="celctrl-arrowbtn fas fa-chevron-circle-right" id="celctrl-outerrightbtn"></i>
+        </div>
+    </div>
+    <script src="./js/index.js"></script>
+</body>
+
+</html>

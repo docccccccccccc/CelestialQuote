@@ -1,0 +1,19 @@
+@font-face {
+    font-family: '思源黑体';
+    src: url('../font/SourceHanSansCN-Normal.woff') format('woff'),
+        url('../font/SourceHanSansCN-Normal.ttf') format('truetype'),
+        url('../font/SourceHanSansCN-Normal.svg') format('svg'),
+        url('../font/SourceHanSansCN-Normal.otf') format('otf');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'MonospaceTypewriter';
+    src: url('../font/MonospaceTypewriter.woff') format('woff'),
+        url('../font/MonospaceTypewriter.ttf') format('truetype'),
+        url('../font/MonospaceTypewriter.svg') format('svg'),
+        url('../font/MonospaceTypewriter.otf') format('otf');
+    font-weight: normal;
+    font-style: normal;
+}
